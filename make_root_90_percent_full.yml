@@ -1,0 +1,10 @@
+---
+- name: Create disk space more than 90%
+  hosts: localhost
+  tasks:
+  - name: 'Ensure that free space is more than 90%'
+    command: 'fallocate --length {{ (item.size_total|float * 0.9 - (item.size_total - item.size_available))|int }} /root/make90.img'
+    when:
+      - item.mount == "/"
+      - item.size_available < item.size_total|float * 0.9
+    with_items: '{{ ansible_mounts }}'
