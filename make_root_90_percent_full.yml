@@ -1,6 +1,6 @@
 ---
 - name: Create disk space more than 90%
-  hosts: localhost
+  hosts: all
   tasks:
   - name: 'Ensure that free space is more than 90%'
     command: 'fallocate --length {{ (item.size_total|float * 0.9 - (item.size_total - item.size_available))|int }} /root/make90.img'
