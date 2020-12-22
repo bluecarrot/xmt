@@ -1,0 +1,9 @@
+---
+- name: Remove make90.img
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Remove make90.img
+      file:
+        path: "/root/make90.img"
+        state: absent
