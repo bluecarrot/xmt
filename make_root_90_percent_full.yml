@@ -2,6 +2,14 @@
 - name: Create disk space more than 90%
   hosts: all
   tasks:
+  - name: Check file make90.img
+    stat:
+      path: /root/make90.img
+    register: make90
+  - name: fail when make90.img exists
+    fail:
+      msg: "/root/make90.img is exists, execute remove make90.img job"
+    when: make90.stat.exists == true
   - name: 'Ensure that free space is more than 90%'
     command: 'fallocate --length {{ (item.size_total|float * 0.9 - (item.size_total - item.size_available))|int }} /root/make90.img'
     when:
